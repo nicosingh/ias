@@ -1,3 +1,0 @@
-Alter the file PluginConfig and Value inside config folder.
-For test the new configuration i create a new configuration file (configOkGlobalFilter.json) with one local filter and the global filter; 
-inside test/config folder alter file JsonConfigReaderTest.java for check if the plugin accept this new configuration.
