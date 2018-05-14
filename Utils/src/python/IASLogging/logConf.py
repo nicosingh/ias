@@ -17,7 +17,7 @@ class Log():
          raise
     #Format of the data for filename
     now = datetime.datetime.utcnow().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
-#    fileNameN='IasRoot'+now
+
     fileNameN=fileName+now
     #path of the file
     file=("{0}/logs/{1}.log".format(logPath, fileNameN))
