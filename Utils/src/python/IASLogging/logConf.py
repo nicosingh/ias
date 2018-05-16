@@ -17,19 +17,32 @@ class Log():
          raise
     #Format of the data for filename
     now = datetime.datetime.utcnow().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
+    level=0
+    file=("{0}/logs/{1}.log".format(logPath, fileName+now))
+    LEVELS = { 'debug':logging.DEBUG,
+            'info':logging.INFO,
+            'warning':logging.WARNING,
+            'error':logging.ERROR,
+            'critical':logging.CRITICAL,
+            }
 
-    fileNameN=fileName+now
+    if len(sys.argv) > 1:
+     level_name = sys.argv[1]
+     if (LEVELS.get(level_name, logging.NOTSET)==0):
+      level=logging.DEBUG
+
+     print("livello del logger"+str(level))
+
+    logging.basicConfig(level=level,format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S.', filename=file)
     #path of the file
-    file=("{0}/logs/{1}.log".format(logPath, fileNameN))
+
 
     # set up logging to file - see previous section for more details
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S.',
-                        filename=file)
+
     # define a Handler which writes INFO messages or higher to the sys.stderr
     console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
+    # console.setLevel(logging.INFO)
     # set a format which is simpler for console use
     formatter = logging.Formatter('%(asctime)s%(msecs)d %(levelname)-8s [%(filename)s %(lineno)d] %(message)s' , '%H:%M:%S.')
     # tell the handler to use this format
