@@ -30,9 +30,6 @@ class Log():
      level_name = sys.argv[1]
      if (LEVELS.get(level_name, logging.NOTSET)==0):
       level=logging.DEBUG
-
-     print("livello del logger"+str(level))
-
     logging.basicConfig(level=level,format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S.', filename=file)
     #path of the file
