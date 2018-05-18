@@ -15,14 +15,23 @@ from os.path import join
 from IASLogging.logConf import Log
 
 if __name__ == '__main__':
-    log=Log()
-    logger=log.GetLoggerFile(os.path.basename(__file__).split(".")[0])
+
     # Parse the command line
     parser = OptionParser()
     parser.add_option("-d", "--destFolder", help="HTML destination folder", action="store", type="string", dest="destFolder")
     parser.add_option("-s", "--sourceFolder", help="IAS source folder", action="store", type="string", dest="srcFolder")
+    parser.add_argument(
+                        '-le',
+                        '--level',
+                        help='Logging level: Set the level of the message for the logger, default: Debug level',
+                        action='store',
+                        choices=['info', 'debug', 'warning', 'error', 'critical'],
+                        default='debug',
+                        required=False)
     (options, args) = parser.parse_args()
-
+    loggingLevel=args.level
+    log=Log()
+    logger=log.initLogging(os.path.basename(__file__),loggingLevel)
     if not options.destFolder:
         logger.info("No destination folder given")
         sys.exit(-1)

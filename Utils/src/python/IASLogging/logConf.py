@@ -5,8 +5,8 @@ import datetime
 
 
 class Log():
-
-  def GetLoggerFile(fileName,self):
+  @staticmethod
+  def initLogging (nameFile,loggingLevel):
     #take the path for logs folder inside $IAS_ROOT
     logPath=os.environ["IAS_ROOT"]
     #If the file doesn't exist it's created
@@ -15,21 +15,20 @@ class Log():
     except OSError as e:
         if e.errno != errno.EEXIST:
          raise
+
     #Format of the data for filename
     now = datetime.datetime.utcnow().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
-    level=0
-    file=("{0}/logs/{1}.log".format(logPath, str(fileName)+str(now)))
     LEVELS = { 'debug':logging.DEBUG,
             'info':logging.INFO,
             'warning':logging.WARNING,
             'error':logging.ERROR,
             'critical':logging.CRITICAL,
             }
-
-    if len(sys.argv) > 1:
-     level_name = sys.argv[1]
-     if (LEVELS.get(level_name, logging.NOTSET)==0):
-      level=logging.DEBUG
+    level_name = loggingLevel
+    level = LEVELS.get(level_name, logging.NOTSET)
+    file=("{0}/logs/{1}.log".format(logPath, str(nameFile)+str(now)))
+    print("livello "+str(level))
+    level=loggingLevel.upper()
     logging.basicConfig(level=level,format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S.', filename=file)
     #path of the file
