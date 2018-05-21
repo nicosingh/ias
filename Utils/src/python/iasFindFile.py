@@ -9,8 +9,7 @@ from IASTools.FileSupport import FileSupport
 from IASLogging.logConf import Log
 
 if __name__ == '__main__':
-    log=Log()
-    logger=log.initLogging(os.path.basename(__file__))
+
     parser = argparse.ArgumentParser(description='Search for a file in the hierarchy of IAS folders.')
     parser.add_argument(
         '-t',
@@ -33,7 +32,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     loggingLevel=args.level
     log = Log()
-    fileName=(os.path.basename(__file__))
+    fileName=(os.path.basename(__file__),loggingLevel)
     try:
         if not args.fileType is None:
             fileSupport = FileSupport(args.fileName, args.fileType)
