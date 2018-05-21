@@ -169,9 +169,17 @@ if __name__ == '__main__':
                         default=True,
                         required=False)
     parser.add_argument(
-                        '-le',
-                        '--level',
-                        help='Logging level: Set the level of the message for the logger, default: Debug level',
+                        '-lso',
+                        '--levelStdOut',
+                        help='Logging level: Set the level of the message for the file logger, default: Debug level',
+                        action='store',
+                        choices=['info', 'debug', 'warning', 'error', 'critical'],
+                        default='debug',
+                        required=False)
+    parser.add_argument(
+                        '-lcon',
+                        '--levelConsole',
+                        help='Logging level: Set the level of the message for the console logger, default: Debug level',
                         action='store',
                         choices=['info', 'debug', 'warning', 'error', 'critical'],
                         default='debug',
@@ -183,11 +191,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     #Start the logger with param define by the user.
-    loggingLevel=args.level
+    stdoutLevel=args.levelStdOut
+    consoleLevel=args.levelConsole
     log = Log()
     fileName=(os.path.basename(__file__))
 
-    logger= log.initLogging(fileName, loggingLevel)
+    logger=log.initLogging(os.path.basename(__file__),stdoutLevel,consoleLevel)
 
     logger.info("Start IASRun")
     verbose = args.verbose
@@ -314,6 +323,3 @@ if __name__ == '__main__':
         for t in range(17):
             delimiter = delimiter + arrowUp
         logger.info("%s %s done %s",delimiter,args.className,delimiter)
-
-
-    

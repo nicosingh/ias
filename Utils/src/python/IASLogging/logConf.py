@@ -6,7 +6,7 @@ import datetime
 
 class Log():
   @staticmethod
-  def initLogging (nameFile,loggingLevel):
+  def initLogging (nameFile,stdoutLevel,consoleLevel):
     #take the path for logs folder inside $IAS_ROOT
     logPath=os.environ["IAS_ROOT"]
     #If the file doesn't exist it's created
@@ -24,21 +24,20 @@ class Log():
             'error':logging.ERROR,
             'critical':logging.CRITICAL,
             }
-    level_name = loggingLevel
-    level = LEVELS.get(level_name, logging.NOTSET)
+    stdLevel_name = stdoutLevel
+    consoleLevel= consoleLevel
+    stdLevel = LEVELS.get(stdLevel_name, logging.NOTSET)
+    consoleLevel = LEVELS.get(consoleLevel, logging.NOTSET)
     file=("{0}/logs/{1}.log".format(logPath, str(nameFile)+str(now)))
-    print("livello "+str(level))
-    level=loggingLevel.upper()
-    logging.basicConfig(level=level,format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
+
+    logging.basicConfig(level=stdLevel,format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S.', filename=file)
     #path of the file
-
-
     # set up logging to file - see previous section for more details
 
     # define a Handler which writes INFO messages or higher to the sys.stderr
     console = logging.StreamHandler()
-    # console.setLevel(logging.INFO)
+    console.setLevel(consoleLevel)
     # set a format which is simpler for console use
     formatter = logging.Formatter('%(asctime)s%(msecs)d %(levelname)-8s [%(filename)s %(lineno)d] %(message)s' , '%H:%M:%S.')
     # tell the handler to use this format
