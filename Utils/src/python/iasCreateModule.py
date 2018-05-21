@@ -9,7 +9,7 @@ import argparse
 
 from IASTools.ModuleSupport import ModuleSupport
 from IASLogging.logConf import Log
-
+import os
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Creates a module for the Integrated Alarm System.')

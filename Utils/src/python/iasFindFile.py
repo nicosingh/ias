@@ -7,7 +7,7 @@ Created on Sep 21, 2016
 import argparse
 from IASTools.FileSupport import FileSupport
 from IASLogging.logConf import Log
-
+import os
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Search for a file in the hierarchy of IAS folders.')

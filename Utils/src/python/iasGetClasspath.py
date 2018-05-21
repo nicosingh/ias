@@ -7,7 +7,7 @@ Writes the classpath in the stdout
 
 from IASTools.CommonDefs import CommonDefs
 from IASLogging.logConf import Log
-
+import os
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get the classpath.')
     parser.add_argument(

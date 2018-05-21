@@ -13,7 +13,7 @@ from IASApiDocs.JavadocBuilder import JavadocBuilder
 from IASApiDocs.PydocBuilder import PydocBuilder
 from os.path import join
 from IASLogging.logConf import Log
-
+import os
 if __name__ == '__main__':
 
     # Parse the command line
