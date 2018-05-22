@@ -66,6 +66,6 @@ class TestCreateModule(unittest.TestCase):
 
 if __name__ == '__main__':
     log=Log()
-    logger=log.GetLoggerFile(os.path.basename(__file__),"debug")
+    logger=log.GetLoggerFile(os.path.basename(__file__),"info","info")
     logger.info("Start main")
     unittest.main()

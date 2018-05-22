@@ -25,7 +25,7 @@ if __name__ == '__main__':
                         help='Logging level: Set the level of the message for the file logger, default: Debug level',
                         action='store',
                         choices=['info', 'debug', 'warning', 'error', 'critical'],
-                        default='debug',
+                        default='info',
                         required=False)
     parser.add_argument(
                         '-lcon',
@@ -33,7 +33,7 @@ if __name__ == '__main__':
                         help='Logging level: Set the level of the message for the console logger, default: Debug level',
                         action='store',
                         choices=['info', 'debug', 'warning', 'error', 'critical'],
-                        default='debug',
+                        default='info',
                         required=False)
     parser.add_argument('moduleName', help='The name of the IAS module to create')
     args = parser.parse_args()
