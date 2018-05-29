@@ -54,4 +54,3 @@ class Log():
     logger1 = logging.getLogger(__name__)
 
     return logger1
-
