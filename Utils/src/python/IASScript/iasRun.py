@@ -200,7 +200,7 @@ if __name__ == '__main__':
     logger.info("Start IASRun")
     verbose = args.verbose
     if verbose:
-        logger.info("\nVerbose mode ON")
+        logger.info("Verbose mode ON")
 
     # Get java options from JAVA_OPTS environment variable
     javaOptions=javaOpts()
@@ -312,7 +312,7 @@ if __name__ == '__main__':
         for t in range(16):
             delimiter = delimiter + arrowDown
 
-        logger.info("\n %s %s output %s",delimiter,args.className,delimiter)
+        logger.info("%s %s output %s",delimiter,args.className,delimiter)
 
     call(cmd)
 
