@@ -8,6 +8,7 @@ class Log():
   @staticmethod
   def initLogging (nameFile,stdoutLevel,consoleLevel):
     #take the path for logs folder inside $IAS_ROOT
+
     logPath=os.environ["IAS_ROOT"]
     #If the file doesn't exist it's created
     try:
@@ -30,24 +31,20 @@ class Log():
     consoleLevel = LEVELS.get(consoleLevel, logging.NOTSET)
     file=("{0}/logs/{1}.log".format(logPath, str(nameFile)+str(now)))
 
-    logging.basicConfig(level=stdLevel,format='%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S.', filename=file)
-    #path of the file
-    # set up logging to file - see previous section for more details
-
-    # define a Handler which writes INFO messages or higher to the sys.stderr
-    console = logging.StreamHandler()
-    console.setLevel(consoleLevel)
-    # set a format which is simpler for console use
-    formatter = logging.Formatter('%(asctime)s%(msecs)d %(levelname)-8s [%(filename)s %(lineno)d] %(message)s' , '%H:%M:%S.')
-    # tell the handler to use this format
-    console.setFormatter(formatter)
-    # add the handler to the root logger
-    logging.getLogger('').addHandler(console)
-
-    # Now, define a couple of other loggers which might represent areas in your
-    # application:
-
-    logger1 = logging.getLogger(__name__)
-
-    return logger1
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(file)
+    fh.setLevel(stdLevel)
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(consoleLevel)
+    # create formatter and add it to the handlers
+    formatterConsole = logging.Formatter('%(asctime)s%(msecs)d %(levelname)-8s [%(filename)s %(lineno)d] %(message)s' , '%H:%M:%S.')
+    formatterFile =  logging.Formatter('%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s')
+    fh.setFormatter(formatterFile)
+    ch.setFormatter(formatterConsole)
+    # add the handlers to the logger
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+    return logger
