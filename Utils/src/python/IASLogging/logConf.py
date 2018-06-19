@@ -32,7 +32,7 @@ class Log():
     file=("{0}/logs/{1}.log".format(logPath, str(nameFile)+str(now)))
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.INFO) 
     # create file handler which logs even debug messages
     fh = logging.FileHandler(file)
     fh.setLevel(stdLevel)
@@ -44,7 +44,7 @@ class Log():
     formatterFile =  logging.Formatter('%(asctime)s%(msecs)d  | %(levelname)s | [%(filename)s %(lineno)d] [%(threadName)s] | %(message)s')
     fh.setFormatter(formatterFile)
     ch.setFormatter(formatterConsole)
-    # add the handlers to the logger
+    # add the handlers to the logger 
     logger.addHandler(fh)
     logger.addHandler(ch)
     return logger

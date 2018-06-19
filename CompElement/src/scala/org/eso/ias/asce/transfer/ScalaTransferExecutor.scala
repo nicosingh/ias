@@ -2,15 +2,19 @@ package org.eso.ias.asce.transfer
 
 import java.util.Properties
 
-import org.eso.ias.types.InOut
 import org.eso.ias.types.Identifier
 
 /**
  * The <code>ScalaTransferExecutor<code> provides the interface
- * for scala implementators of the transfer function.
+ * for scala implementations of the transfer function.
+ * 
+ * @param cEleId: The id of the ASCE
+ * @param cEleRunningId: the running ID of the ASCE
+ * @param validityTimeFrame: The time frame (msec) to invalidate monitor points
+ * @param props: The properties for the executor
  */
-abstract class ScalaTransferExecutor[T](cEleId: String, cEleRunningId: String, props: Properties) 
-extends TransferExecutor(cEleId,cEleRunningId,props) {
+abstract class ScalaTransferExecutor[T](cEleId: String, cEleRunningId: String, validityTimeFrame: Long, props: Properties) 
+extends TransferExecutor(cEleId,cEleRunningId,validityTimeFrame,props) {
   
   /**
 	 * This method transparently return a value from the passed ID,
@@ -27,7 +31,7 @@ extends TransferExecutor(cEleId,cEleRunningId,props) {
 	 * @param id The (non templated) identifier of the value
 	 * @return the IASValue of the given ID, or None if not found in the Map
 	 */
-  protected final def getValue(inputs: Map[String, InOut[_]], id: String): Option[InOut[_]] = {
+  protected final def getValue(inputs: Map[String, IasIO[_]], id: String): Option[IasIO[_]] = {
     if (Identifier.isTemplatedIdentifier(id)) {
 			throw new IllegalArgumentException("Templated IDs are forbidden here");
 		}
@@ -54,6 +58,6 @@ extends TransferExecutor(cEleId,cEleRunningId,props) {
 	 * @param actualOutput: the actual output of the ASCE
 	 * @return the computed value to set as output of the ASCE
 	 */
-	def eval(compInputs: Map[String, InOut[_]], actualOutput: InOut[T]): InOut[T]
+	def eval(compInputs: Map[String, IasIO[_]], actualOutput: IasIO[T]): IasIO[T]
   
 }

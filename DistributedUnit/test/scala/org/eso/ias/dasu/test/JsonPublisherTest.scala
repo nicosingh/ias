@@ -10,14 +10,14 @@ import org.eso.ias.cdb.CdbReader
 import java.io.FileWriter
 import org.eso.ias.dasu.publisher.JsonWriterPublisher
 import org.eso.ias.cdb.json.JsonReader
-import org.ias.logging.IASLogger
+import org.eso.ias.logging.IASLogger
 import java.nio.file.FileSystems
 import org.eso.ias.types.IdentifierType
 import java.io.File
 import scala.io.Source
 import org.eso.ias.types.IASTypes
 import org.eso.ias.types.OperationalMode._
-import org.eso.ias.types.AlarmSample
+import org.eso.ias.types.Alarm
 import org.eso.ias.types.IasValidity._
 import org.eso.ias.dasu.DasuImpl
 import org.eso.ias.dasu.publisher.DirectInputSubscriber
@@ -109,7 +109,7 @@ class JsonPublisherTest extends FlatSpec {
     val iasValue = jsonSerializer.valueOf(strReadFromFile)
     assert(iasValue.id=="ThresholdAlarm")
     assert(iasValue.valueType==IASTypes.ALARM)
-    assert(iasValue.value==AlarmSample.CLEARED)
+    assert(iasValue.value==Alarm.CLEARED)
     outputFile.deleteOnExit()
   }  
 }

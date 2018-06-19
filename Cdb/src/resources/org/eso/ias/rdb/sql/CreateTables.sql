@@ -42,6 +42,8 @@ CREATE TABLE IAS (
   logLevel VARCHAR2(10) NOT NULL,
   refreshRate NUMBER(8) NOT NULL,
   tolerance NUMBER(8) NOT NULL,
+  hbFrequency NUMBER(8) NOT NULL,
+  bsdbUrl VARCHAR(255),
   CONSTRAINT IAS_PK PRIMARY KEY ( id ),
   CONSTRAINT refreshGreaterThenZero CHECK (refreshRate>0),
   CONSTRAINT toleranceGreaterThenZero CHECK (tolerance>0));

@@ -1,3 +1,3 @@
 #!/usr/bin/bash
-testCreateModule
-iasRun -l s org.scalatest.run org.eso.ias.utils.test.ISO8601Test
+testCreateModule -lso info -lcon info
+iasRun -l s -v -lso error -lcon info org.scalatest.run org.eso.ias.utils.test.ISO8601Test

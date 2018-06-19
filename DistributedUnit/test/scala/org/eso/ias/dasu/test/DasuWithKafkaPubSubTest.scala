@@ -1,7 +1,7 @@
 package org.eso.ias.dasu.test
 
 import org.scalatest.FlatSpec
-import org.ias.logging.IASLogger
+import org.eso.ias.logging.IASLogger
 import java.nio.file.FileSystems
 import org.eso.ias.cdb.json.CdbJsonFiles
 import org.eso.ias.cdb.CdbReader
@@ -52,9 +52,9 @@ class DasuWithKafkaPubSubTest extends FlatSpec with KafkaConsumerListener {
   val dasuId = "DasuWithOneASCE"
   
   /** The kafka publisher used by the DASU to send the output */
-  val outputPublisher = KafkaPublisher(dasuId, new Properties())
+  val outputPublisher = KafkaPublisher(dasuId, None, None, new Properties())
   
-  val inputsProvider = new KafkaSubscriber(dasuId, new Properties())
+  val inputsProvider = KafkaSubscriber(dasuId, None, None, new Properties())
   
   // Build the Identifier
   val supervId = new Identifier("SupervId",IdentifierType.SUPERVISOR,None)

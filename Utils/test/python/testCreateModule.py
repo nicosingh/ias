@@ -65,7 +65,8 @@ class TestCreateModule(unittest.TestCase):
         self.assertFalse(exists(TestCreateModule.modulePath), "Module not deleted")
 
 if __name__ == '__main__':
+
     log=Log()
-    logger=log.GetLoggerFile(os.path.basename(__file__),"info","info")
+    logger=log.initLogging(os.path.basename(__file__),"error","info")
     logger.info("Start main")
     unittest.main()

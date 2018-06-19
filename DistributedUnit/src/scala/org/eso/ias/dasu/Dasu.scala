@@ -1,6 +1,6 @@
 package org.eso.ias.dasu
 
-import org.ias.logging.IASLogger
+import org.eso.ias.logging.IASLogger
 import org.eso.ias.cdb.CdbReader
 import org.eso.ias.cdb.json.JsonReader
 import org.eso.ias.cdb.json.CdbFiles
@@ -19,7 +19,6 @@ import org.eso.ias.asce.AsceStates
 import org.eso.ias.types.InOut
 import org.eso.ias.dasu.publisher.OutputPublisher
 import org.eso.ias.types.IASValue
-import org.eso.ias.types.JavaConverter
 import org.eso.ias.dasu.executorthread.ScheduledExecutor
 import scala.util.Try
 import java.util.concurrent.atomic.AtomicLong

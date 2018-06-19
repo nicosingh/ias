@@ -171,18 +171,20 @@ if __name__ == '__main__':
     parser.add_argument(
                         '-lso',
                         '--levelStdOut',
-                        help='Logging level: Set the level of the message for the file logger, default: Debug level',
+                        help='Logging level: Set the level of the message for the file logger, default: info level',
                         action='store',
                         choices=['info', 'debug', 'warning', 'error', 'critical'],
                         default='info',
+                        dest='levelStdOut',
                         required=False)
     parser.add_argument(
                         '-lcon',
                         '--levelConsole',
-                        help='Logging level: Set the level of the message for the console logger, default: Debug level',
+                        help='Logging level: Set the level of the message for the console logger, default: info level',
                         action='store',
                         choices=['info', 'debug', 'warning', 'error', 'critical'],
                         default='info',
+                        dest='levelConsole',
                         required=False)
 
     parser.add_argument('className', help='The name of the class to run the program')

@@ -61,6 +61,21 @@ public class IasDao {
 	private int tolerance;
 	
 	/**
+	 * The frequency of the heartbeat sent by each IAS tool
+	 * in seconds
+	 */
+	@Basic(optional=false)
+	private int hbFrequency;
+	
+	/**
+	 * The URL to connect to the BSDB.
+	 * 
+	 * In case of kafka it is a comma separated list of server:port
+	 */
+	@Basic(optional=false)
+	private String bsdbUrl;
+	
+	/**
 	 * Empty constructor
 	 */
 	public IasDao() {}
@@ -90,7 +105,7 @@ public class IasDao {
 	}
 	
 	public void setTolerance(int tolerance) {
-		this.tolerance = refreshRate;
+		this.tolerance = tolerance;
 	}
 	
 	@Override
@@ -102,7 +117,11 @@ public class IasDao {
 		ret.append(refreshRate);
 		ret.append(", tolerance=");
 		ret.append(tolerance);
-		ret.append(", props={");
+		ret.append(", heartebeat frequency=");
+		ret.append(hbFrequency);
+		ret.append(", BSDB URL=`");
+		ret.append(bsdbUrl);
+		ret.append("`, props={");
 		for (PropertyDao prop: getProps()) {
 			ret.append(' ');
 			ret.append(prop.toString());
@@ -113,7 +132,7 @@ public class IasDao {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(logLevel,refreshRate,tolerance,props);
+		return Objects.hash(logLevel,refreshRate,tolerance,props,hbFrequency,bsdbUrl);
 	}
 
 	@Override
@@ -129,6 +148,24 @@ public class IasDao {
 		return 	Objects.equals(logLevel, other.logLevel) &&
 				Objects.equals(refreshRate, other.refreshRate) &&
 				Objects.equals(tolerance, other.tolerance) &&
+				Objects.equals(hbFrequency, other.hbFrequency) &&
+				Objects.equals(bsdbUrl, other.bsdbUrl) && 
 				Objects.equals(props, other.props);
+	}
+
+	public int getHbFrequency() {
+		return hbFrequency;
+	}
+
+	public void setHbFrequency(int heartbeatFrequency) {
+		this.hbFrequency = heartbeatFrequency;
+	}
+
+	public String getBsdbUrl() {
+		return bsdbUrl;
+	}
+
+	public void setBsdbUrl(String bsdbUrl) {
+		this.bsdbUrl = bsdbUrl;
 	}
 }
