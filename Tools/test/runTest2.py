@@ -3,7 +3,6 @@ import os
 from IASLogging.logConf import Log
 
 if __name__=="__main__":
- os.system("pwd")
  log=Log()
  logger=log.initLogging(os.path.basename(__file__),"info","info")
  logger.info("Start testModel")
