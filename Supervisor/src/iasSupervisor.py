@@ -1,10 +1,10 @@
 import os
 from IASLogging.logConf import Log
 import argparse
-#from iasRun import main
+
 
 if __name__=="__main__":
- parser = argparse.ArgumentParser(description='Run a java or scala program.')
+ parser = argparse.ArgumentParser(description='Run iasSupervisor Script.')
  parser.add_argument(
                         '-si',
                         '--SupervisorId',
@@ -27,7 +27,7 @@ if __name__=="__main__":
                         choices=['info', 'debug', 'warning', 'error', 'critical'],
                         default='info',
                         required=False)
- 
+
  parser.add_argument(
                         '-v',
                         '--verbose',
@@ -39,58 +39,43 @@ if __name__=="__main__":
 		     '--otherArg',
                      nargs='+',
                      help="Insert other argument",
-                     required="false")
+                     required=False)
+
+
+ parser.add_argument('-j',
+		     '--javaArg',
+                     nargs='+',
+                     help="Insert java argument",
+                     required=False)
 
  args = parser.parse_args()
  id=args.SupervisorId
  lso=args.levelStdOut
  lcon=args.levelConsole
  otherArgs=args.otherArg
+ javaArgs=args.javaArg
 
 
  log = Log()
  logger=log.initLogging(os.path.basename(__file__),lso,lcon)
 
- cmd=""
+ oArg=""
+ jArg=""
  if not id:
   logger.error("Missing supervisor ID in command line")
  else:
   logger.info("ID of supervisor: %s", id)
   LOGID_PARAM="-i "+id
- 
- for elem in otherArgs:
-  cmd+=" "+elem 
- startScript="iasRun -l s "+LOGID_PARAM+" org.eso.ias.supervisor.Supervisor "+id
- logger.info("iasRun -l s %s org.eso.ias.supervisor.Supervisor %s %s",LOGID_PARAM,id,cmd)
+
+ if otherArgs:
+  for elem in otherArgs:
+   oArg+=" "+elem
+ if javaArgs:
+  for elem in javaArgs:
+   jArg+=" "+elem
+
+
+ startScript="iasRun -l s "+LOGID_PARAM+" org.eso.ias.supervisor.Supervisor "+id+""+oArg+""+jArg
+ logger.info("iasRun -l s %s org.eso.ias.supervisor.Supervisor %s %s %s",LOGID_PARAM,id,oArg,jArg)
  logger.info("Script iasSupervisor start iasRun script")
  os.system(startScript)
-
- """
- JAVA_PROPS=""
- OTHER_PARAMS=""
- TEMP_PARMS_ARRAY=[]
- 
-
- if len(JAVA_PROPS)>0:
-  logger.info("Found java properties: %s",JAVA_PROPS)
- 
- if len(OTHER_PARAMS)==0:
-  logger.error("Missing supervisor ID in command line") 
- else:
-  TEMP=(OTHER_PARAMS )
-  id=TEMP_PARMS_ARRAY[0]
-  logger.info( "Supervisor ID= %s", id)
-  LOGID_PARAM="-i "+str(id)
-
-
- TEMP=OTHER_PARAMS 
- ID=TEMP_PARMS_ARRAY[0]
- logger.info( "Supervisor ID= %s", id)
-
- CMD="iasRun -l s $JAVA_PROPS $LOGID_PARAM org.eso.ias.supervisor.Supervisor $OTHER_PARAMS"
-
- #echo Will run
- #echo $CMD
-
- #$CMD
- """
