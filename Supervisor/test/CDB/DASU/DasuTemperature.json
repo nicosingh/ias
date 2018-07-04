@@ -1,7 +1,0 @@
-{
-	"asceIDs":[
-		"AsceTemperature"],
-	"outputId":"TemperatureAlarm",
-	"logLevel":"FATAL",
-	"id":"DasuTemperature"
-}
