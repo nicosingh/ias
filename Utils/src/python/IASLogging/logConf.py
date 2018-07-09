@@ -16,7 +16,7 @@ class Log():
     except OSError as e:
         if e.errno != errno.EEXIST:
          raise
-    cleanedFileName = nameFile.split(os.sep)[len(nameFile.split(os.sep))-1]
+    cleanedFileName = os.path.splitext(nameFile.split(os.sep)[len(nameFile.split(os.sep))-1])[0]
     #Format of the data for filename
     now = datetime.datetime.utcnow().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
     LEVELS = { 'debug':logging.DEBUG,
