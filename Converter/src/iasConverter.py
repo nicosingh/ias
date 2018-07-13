@@ -1,14 +1,14 @@
 import os
 from IASLogging.logConf import Log
 import argparse
-
+from IASScript.iasRun import main
 
 if __name__=="__main__":
  parser = argparse.ArgumentParser(description='Run iasConverter Script.')
  parser.add_argument(
                         '-ci',
-                        '--ConverterId',
-                        help='The ID of the supervisor',
+                        '--converterId',
+                        help='The ID of the converter',
                         action='store',
                         required=True)
  parser.add_argument(
@@ -35,12 +35,12 @@ if __name__=="__main__":
                         action='store_true',
                         default=False,
                         required=False)
-
  parser.add_argument('-o',
 		     '--otherArg',
                      nargs='+',
                      help="Insert other argument",
                      required=False)
+
 
  parser.add_argument('-j',
 		     '--javaArg',
@@ -48,18 +48,26 @@ if __name__=="__main__":
                      help="Insert java argument",
                      required=False)
 
+
  args = parser.parse_args()
- id=args.ConverterId
+ id=args.converterId
  lso=args.levelStdOut
  lcon=args.levelConsole
  otherArgs=args.otherArg
  javaArgs=args.javaArg
+
 
  log = Log()
  logger=log.initLogging(os.path.basename(__file__),lso,lcon)
 
  oArg=""
  jArg=""
+ if not id:
+  logger.error("Missing supervisor ID in command line")
+ else:
+  logger.info("ID of supervisor: %s", id)
+  LOGID_PARAM="-i "+id
+
  if otherArgs:
   for elem in otherArgs:
    oArg+=" "+elem
@@ -67,14 +75,7 @@ if __name__=="__main__":
   for elem in javaArgs:
    jArg+=" "+elem
 
-
- if not id:
-  logger.error("Missing converter ID in command line")
- else:
-  logger.info("ID of converter: %s", id)
-  LOGID_PARAM="-i "+id
-
  startScript="iasRun -l s "+LOGID_PARAM+" org.eso.ias.converter.Converter "+id+""+oArg+""+jArg
- logger.info("iasRun -l s %s org.eso.ias.converter.Converter %s %s",LOGID_PARAM,id,oArg,jArg)
- logger.info("Script iasConverter start iasRun script")
- os.system(startScript)
+ logger.info("iasRun -l s %s org.eso.ias.converter.Converter %s %s %s",LOGID_PARAM,id,oArg,jArg)
+ logger.info("Script iasSupervisor start iasRun script")
+ main("s","supId",jArg,True,False,lso,lcon,"org.eso.ias.converter.Converter","",0)

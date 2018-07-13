@@ -1,10 +1,17 @@
 import os
 from IASLogging.logConf import Log
 import argparse
-
+import iasRun
 
 if __name__=="__main__":
  parser = argparse.ArgumentParser(description='Run iasSupervisor Script.')
+ parser.add_argument(
+                        '-l',
+                        '--language',
+                        help='The programming language: one between scala (or shortly s) and java (or j)',
+                        action='store',
+                        choices=['java', 'j', 'scala','s'],
+                        required=True)
  parser.add_argument(
                         '-si',
                         '--SupervisorId',
@@ -54,18 +61,21 @@ if __name__=="__main__":
  lcon=args.levelConsole
  otherArgs=args.otherArg
  javaArgs=args.javaArg
-
-
+ verbose=args.verbose
+ language=args.language
  log = Log()
  logger=log.initLogging(os.path.basename(__file__),lso,lcon)
 
  oArg=""
  jArg=""
+ lsoVal=""
+ lconVal=""
  if not id:
   logger.error("Missing supervisor ID in command line")
  else:
   logger.info("ID of supervisor: %s", id)
   LOGID_PARAM="-i "+id
+ # Build the command line
 
  if otherArgs:
   for elem in otherArgs:
@@ -73,9 +83,16 @@ if __name__=="__main__":
  if javaArgs:
   for elem in javaArgs:
    jArg+=" "+elem
+ if lso:
+  LOGID_PARAM+=" -lso "+lso
+ if lcon:
+  LOGID_PARAM+=" -lcon "+lcon
 
 
- startScript="iasRun -l s "+LOGID_PARAM+" org.eso.ias.supervisor.Supervisor "+id+""+oArg+""+jArg
- logger.info("iasRun -l s %s org.eso.ias.supervisor.Supervisor %s %s %s",LOGID_PARAM,id,oArg,jArg)
+ startScript="iasRun -l s "+LOGID_PARAM+" org.eso.ias.supervisor.Supervisor "+oArg+""+jArg
+ logger.info(startScript)
  logger.info("Script iasSupervisor start iasRun script")
- os.system(startScript)
+ iasRun.main(language,id,"",verbose,False,lsoVal,lconVal,"org.eso.ias.supervisor.Supervisor","",0)
+ #os.system(startScript)
+ #main(language,logfileId,jProp,verbose,enableAssertions,stdoutLevel,consoleLevel,className,param,size)
+ #iasRunMain("s","supId","",True,False,lsoVal,lconVal,"org.eso.ias.supervisor.Supervisor","",0)
